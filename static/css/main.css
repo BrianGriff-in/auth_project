@@ -1,0 +1,61 @@
+/* ── Layout ─────────────────────────────────────── */
+body {
+  background: #f0f2f5;
+  min-height: 100vh;
+}
+
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  border-radius: 16px;
+  border: none;
+}
+
+/* ── Divider ─────────────────────────────────────── */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #adb5bd;
+  font-size: .85rem;
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #dee2e6;
+}
+.divider span {
+  padding: 0 .75rem;
+}
+
+/* ── Social buttons ──────────────────────────────── */
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  transition: background .2s;
+}
+
+/* ── Avatar placeholder ──────────────────────────── */
+.avatar-placeholder {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #0d6efd;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

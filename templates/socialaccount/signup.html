@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if form.errors %}
+  <div class="container mt-5">
+    <div class="alert alert-warning">
+      {{ form.errors }}
+      <a href="{% url 'login' %}" class="btn btn-primary mt-2">Go to Login</a>
+    </div>
+  </div>
+{% else %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('form').submit();
+  });
+</script>
+<form method="post" action="{% url 'socialaccount_signup' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+</form>
+{% endif %}
+{% endblock %}

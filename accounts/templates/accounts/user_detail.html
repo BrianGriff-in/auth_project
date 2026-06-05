@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+
+          <div class="d-flex align-items-center mb-4">
+            {% if user.avatar %}
+              <img src="{{ user.avatar }}" class="rounded-circle me-3" width="70" height="70"/>
+            {% else %}
+              <div class="avatar-placeholder me-3">{{ user.username|first|upper }}</div>
+            {% endif %}
+            <div>
+              <h4 class="mb-0 fw-bold">{{ user.username }}</h4>
+              <small class="text-muted">{{ user.email }}</small>
+            </div>
+          </div>
+
+          <hr/>
+
+          <table class="table table-borderless">
+            <tr><th>Email</th><td>{{ user.email }}</td></tr>
+            <tr><th>Username</th><td>{{ user.username }}</td></tr>
+            <tr>
+              <th>Provider</th>
+              <td>
+                {% if user.provider == 'google' %}
+                  <span class="badge bg-danger">Google</span>
+                {% elif user.provider == 'facebook' %}
+                  <span class="badge bg-primary">Facebook</span>
+                {% else %}
+                  <span class="badge bg-secondary">Local</span>
+                {% endif %}
+              </td>
+            </tr>
+            <tr><th>Staff</th><td>{{ user.is_staff|yesno:"Yes,No" }}</td></tr>
+            <tr><th>Active</th><td>{{ user.is_active|yesno:"Yes,No" }}</td></tr>
+            <tr><th>Joined</th><td>{{ user.date_joined|date:"M d, Y H:i" }}</td></tr>
+            <tr><th>Last Login</th><td>{{ user.last_login|date:"M d, Y H:i"|default:"Never" }}</td></tr>
+          </table>
+
+          <a href="{% url 'users_list' %}" class="btn btn-outline-secondary">← Back to Users</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
