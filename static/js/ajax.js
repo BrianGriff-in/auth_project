@@ -1,5 +1,11 @@
+// ── Email validator ───────────────────────────────────────────
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 const CSRF = $('[name=csrfmiddlewaretoken]').val() ||
   document.cookie.match(/csrftoken=([^;]+)/)?.[1] || '';
+
 // ── Spinner helpers ──────────────────────────────────────────
 function showSpinner(spinnerId, btnId) {
   $('#' + spinnerId).removeClass('d-none');
@@ -20,6 +26,11 @@ function handleLogin() {
 
   if (!email || !password) {
     errorBox.removeClass('d-none').text('Please fill in all fields.');
+    return;
+  }
+    // ── NEW: validate email format ──
+  if (!isValidEmail(email)) {
+    errorBox.removeClass('d-none').text('Please enter a valid email address.');
     return;
   }
 
@@ -61,6 +72,12 @@ function handleRegister() {
     errorBox.removeClass('d-none').text('All fields are required.');
     return;
   }
+  // ── NEW: validate email format ──
+  if (!isValidEmail(email)) {
+    errorBox.removeClass('d-none').text('Please enter a valid email address.');
+    return;
+  }
+
   if (password.length < 6) {
     errorBox.removeClass('d-none').text('Password must be at least 6 characters.');
     return;

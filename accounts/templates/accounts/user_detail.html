@@ -44,10 +44,45 @@
             <tr><th>Last Login</th><td>{{ user.last_login|date:"M d, Y H:i"|default:"Never" }}</td></tr>
           </table>
 
-          <a href="{% url 'users_list' %}" class="btn btn-outline-secondary">← Back to Users</a>
+            <div class="d-flex gap-2 mt-3">
+            <a href="{% url 'user_edit' user.pk %}" class="btn btn-primary">
+                <i class="bi bi-pencil me-1"></i> Edit
+            </a>
+            {% if user != request.user %}
+            <a href="{% url 'user_delete' user.pk %}" class="btn btn-outline-danger">
+                <i class="bi bi-trash me-1"></i> Delete
+            </a>
+            <button class="btn btn-outline-warning" onclick="toggleActive({{ user.pk }})">
+                <i class="bi bi-toggle-on me-1"></i>
+                <span id="activeLabel">{% if user.is_active %}Deactivate{% else %}Activate{% endif %}</span>
+            </button>
+            {% endif %}
+            <a href="{% url 'users_list' %}" class="btn btn-outline-secondary">← Back</a>
+            </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function toggleActive(pk) {
+  $.ajax({
+    url: `/users/${pk}/toggle-active/`,
+    type: 'POST',
+    headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+    success(res) {
+      if (res.success) {
+        const label = document.getElementById('activeLabel');
+        label.textContent = res.is_active ? 'Deactivate' : 'Activate';
+        location.reload();
+      } else {
+        alert(res.error);
+      }
+    }
+  });
+}
+</script>
 {% endblock %}
